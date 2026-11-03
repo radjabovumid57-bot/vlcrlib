@@ -1,0 +1,49 @@
+name: vlcrlib-mobile
+options:
+  bundleIdPrefix: org.vlcrlib
+  deploymentTarget:
+    iOS: "13.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    CLANG_CXX_LANGUAGE_STANDARD: c++17
+    CLANG_C_LANGUAGE_STANDARD: c11
+    IPHONEOS_DEPLOYMENT_TARGET: "13.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+
+targets:
+  vlcrlib-mobile:
+    type: application
+    platform: iOS
+    sources:
+      - path: ../../example/mobile_hello.c
+      - path: ../../assets
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.vlcrlib.mobile
+        PRODUCT_NAME: vlcrlib-mobile
+        INFOPLIST_FILE: Info.plist
+        HEADER_SEARCH_PATHS:
+          - $(SRCROOT)/../../src
+          - $(SRCROOT)/../../external
+          - $(SRCROOT)/../../external/tinygltf/include
+          - $(SRCROOT)/../../external/SDL3/include
+        LIBRARY_SEARCH_PATHS:
+          - $(SRCROOT)/../../build-ios/Release-iphoneos
+        OTHER_LDFLAGS:
+          - -lvlcrlib
+          - -lSDL3
+    dependencies:
+      - sdk: UIKit.framework
+      - sdk: Foundation.framework
+      - sdk: CoreGraphics.framework
+      - sdk: QuartzCore.framework
+      - sdk: CoreMotion.framework
+      - sdk: AVFoundation.framework
+      - sdk: Metal.framework
+      - sdk: MetalKit.framework
+      - sdk: CoreAudio.framework
+      - sdk: AudioToolbox.framework
+      - sdk: CoreFoundation.framework

@@ -1,0 +1,94 @@
+name: webgpu-runtime
+
+# Run manually until the SwiftShader/WebGPU path is confirmed green on the
+# runner, then enable push/pull_request triggers.
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.58
+
+      - name: Set up Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build python3
+
+      - name: Configure WebGPU build
+        run: |
+          emcmake cmake -S . -B build-web -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DVLCRLIB_SKIP_VCPKG=ON \
+            -DVLCRLIB_BUILD_TOOLS=OFF
+
+      - name: Build validation page
+        run: cmake --build build-web --target web_validate_example
+
+      - name: Run WebGPU validation in headless Chrome
+        env:
+          CHROME: ${{ steps.chrome.outputs.chrome-path }}
+        run: |
+          set -euo pipefail
+          python3 web/serve_web.py build-web/example 8103 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          sleep 2
+
+          set +e
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu-sandbox \
+            --disable-dev-shm-usage \
+            --enable-unsafe-webgpu \
+            --enable-unsafe-swiftshader \
+            --enable-features=Vulkan \
+            --use-angle=swiftshader \
+            --use-webgpu-adapter=swiftshader \
+            --disable-vulkan-surface \
+            --ignore-gpu-blocklist \
+            --window-size=960,540 \
+            --virtual-time-budget=40000 \
+            --enable-logging=stderr \
+            --v=1 \
+            --screenshot=docs/webgpu_validation.png \
+            http://127.0.0.1:8103/web_validate_example.html \
+            > chrome.log 2>&1
+          CHROME_EXIT=$?
+          set -e
+
+          echo "chrome exit=$CHROME_EXIT"
+          if ! grep -E "\[webgpu-validation\] frames=[1-9][0-9]* errors=[0-9]+" chrome.log; then
+            echo "--- chrome.log tail ---"
+            tail -n 120 chrome.log || true
+            exit 1
+          fi
+          if ! grep -E "\[webgpu-validation\] frames=[1-9][0-9]* errors=0" chrome.log; then
+            echo "WebGPU validation reported errors."
+            tail -n 120 chrome.log || true
+            exit 1
+          fi
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webgpu-validation
+          path: |
+            chrome.log
+            docs/webgpu_validation.png
+          if-no-files-found: warn

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vlcrlib CPU rasterizer — WebAssembly</title>
+<style>
+  html,body { margin:0; height:100%; background:#12141a; color:#ddd;
+              font:14px system-ui,sans-serif; }
+  #wrap { display:flex; flex-direction:column; align-items:center;
+          justify-content:center; height:100%; gap:8px; }
+  canvas { width:min(96vw,960px); height:auto; image-rendering:pixelated;
+           border:1px solid #2a2f3a; }
+  #status { opacity:.7; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <div id="status">loading wasm…</div>
+</div>
+<script>
+(async () => {
+  const status = document.getElementById("status");
+  try {
+    const { instance } = await WebAssembly.instantiateStreaming(
+      fetch("vcpu_web.wasm"), {});
+    const ex = instance.exports;
+    if (!ex.vcpu_init(800, 600)) throw new Error("vcpu_init failed");
+    const W = 800, H = 600;
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const image = ctx.createImageData(W, H);
+    const data = image.data;
+    const start = performance.now();
+
+    function frame(now) {
+      const ptr = ex.vcpu_frame((now - start) / 1000.0);
+      if (ptr) {
+        const src = new Uint8Array(ex.memory.buffer, ptr, W * H * 4);
+        for (let i = 0, o = 0; i < W * H; ++i, o += 4) {
+          data[o]     = src[o + 2]; /* BGR(A) -> RGBA */
+          data[o + 1] = src[o + 1];
+          data[o + 2] = src[o];
+          data[o + 3] = src[o + 3];
+        }
+        ctx.putImageData(image, 0, 0);
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    status.textContent = "WebAssembly CPU rasterizer — " + ex.vcpu_hash().toString(16);
+  } catch (e) {
+    status.textContent = "error: " + e;
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

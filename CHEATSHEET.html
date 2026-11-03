@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>vlcrlib — Cheat Sheet</title>
+<style>
+  :root{
+    --ink:#15171c; --muted:#5b6270; --line:#c9ced8;
+    --accent:#e5484d; --accent2:#2563eb; --bg:#ffffff; --card:#f6f7f9;
+    --code-bg:#171a21; --code-fg:#e8ecf3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI",Arial,sans-serif;font-size:9.2px;line-height:1.32}
+  header{background:#171a21;color:#fff;padding:10px 14px 9px;border-bottom:3px solid var(--accent);overflow:hidden}
+  header h1{margin:0;font-size:22px;letter-spacing:.2px}
+  header .sub{color:#aeb7c6;font-size:10px;margin-top:3px}
+  header .badges{float:right;text-align:right;color:#aeb7c6;font-size:8.4px;
+    line-height:1.45;max-width:40%;white-space:normal}
+  header .badges b{color:#fff}
+  main.pages{padding:6px 8px 10px}
+  .page{display:grid;grid-template-columns:1fr 1fr;gap:5mm;
+    align-items:start;break-after:page;page-break-after:always}
+  .page:last-child{break-after:auto;page-break-after:auto}
+  .col{min-width:0}
+  section{break-inside:avoid;page-break-inside:avoid;background:var(--card);border:1px solid var(--line);
+    border-radius:5px;padding:6px 7px;margin:0 0 6px}
+  h2{font-size:11px;margin:0 0 4px;padding-bottom:2px;border-bottom:1px solid var(--line);
+    color:#111;text-transform:uppercase;letter-spacing:.35px}
+  h3{font-size:9.5px;margin:5px 0 2px;color:var(--accent2)}
+  p{margin:2px 0}
+  ul{margin:2px 0 2px 13px;padding:0}
+  li{margin:1px 0}
+  code,kbd{font-family:"Cascadia Mono",Consolas,monospace;font-size:8.6px}
+  code{background:#e9ecf1;padding:0 2px;border-radius:2px}
+  pre{background:var(--code-bg);color:var(--code-fg);padding:5px 6px;border-radius:4px;
+    margin:3px 0;overflow:hidden;white-space:pre-wrap;line-height:1.28}
+  pre code{background:none;color:inherit;padding:0;font-size:8.3px}
+  table{width:100%;border-collapse:collapse;margin:2px 0}
+  td,th{border-bottom:1px solid #dfe3ea;padding:1.6px 2px;vertical-align:top;text-align:left}
+  th{color:var(--muted);font-weight:600;font-size:8.4px}
+  td:first-child{white-space:nowrap;font-family:Consolas,monospace;font-size:8.4px}
+  .cols2{columns:2;column-gap:8px}
+  .tag{display:inline-block;background:#e8ebf2;color:#3b4250;border-radius:3px;
+    padding:0 3px;font-size:8px;font-family:Consolas,monospace}
+  .warn{border-left:3px solid var(--accent);background:#fff1f1;padding:3px 5px;margin:3px 0}
+  .tip{border-left:3px solid var(--accent2);background:#eef4ff;padding:3px 5px;margin:3px 0}
+  footer{color:var(--muted);font-size:8px;padding:2px 10px 8px;text-align:center}
+  @media print{
+    @page{size:A4;margin:7mm}
+    html,body{background:#fff}
+    main.pages{padding:0}
+    .page{gap:4mm}
+    section{background:#fbfbfc}
+    header{margin:-7mm -7mm 4mm;padding:8mm 7mm 4mm}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="badges">
+    <b>Vulkan 1.4</b> · C API<br>
+    raylib-style · SDL3<br>
+    PBR · IBL · GUI · Physics
+  </div>
+  <h1>vlcrlib — Cheat Sheet</h1>
+  <div class="sub">Быстрый справочник по публичному API. R — right-handed Y-up, метры; Vulkan depth 0..1.</div>
+</header>
+
+<main class="pages"><div class="page">
+<div class="col">
+<section>
+<h2>Минимальное приложение</h2>
+<pre><code>#include &lt;vlcrlib.h&gt;
+#include &lt;vloaders.h&gt;   /* FBX/OBJ/USD, LoadModelAuto */
+#include &lt;SDL3/SDL.h&gt;
+
+int main(void) {
+    if (!InitWindow(1280, 720, "vlcrlib")) return 1;
+    SetTargetFPS(60);
+
+    Camera3D cam = { .position={0,1.5f,4}, .target={0,0.5f,0},
+                     .up={0,1,0}, .fovy=45,
+                     .nearPlane=0.05f, .farPlane=100 };
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        BeginMode3D(cam);
+        DrawGrid(10, 1.0f);
+        DrawCube((Vector3){0,0.5f,0}, (Vector3){1,1,1}, RED);
+        EndMode3D();
+
+        DrawText("Hello, vlcrlib", 20, 20, 20, DARKGRAY);
+        EndDrawing();
+    }
+    CloseWindow();
+    return 0;
+}</code></pre>
+<div class="tip">C: compound literals `(Vector3){...}`. C++: `Vector3{...}` / `Camera3D{...}`.</div>
+</section>
+<section>
+<h2>Окно · кадр · время</h2>
+<table>
+<tr><td>InitWindow(w,h,title)</td><td>bool; создаёт окно + Vulkan</td></tr>
+<tr><td>CloseWindow()</td><td>освободить всё</td></tr>
+<tr><td>WindowShouldClose()</td><td>цикл / Esc</td></tr>
+<tr><td>BeginDrawing() / EndDrawing()</td><td>обрамляют кадр</td></tr>
+<tr><td>ClearBackground(Color)</td><td>очистка</td></tr>
+<tr><td>SetTargetFPS(n)</td><td>0 = без лимита</td></tr>
+<tr><td>GetFrameTime()</td><td>float, секунды</td></tr>
+<tr><td>GetTime()</td><td>double, с запуска</td></tr>
+<tr><td>GetFPS()</td><td>int</td></tr>
+<tr><td>SetWindowTitle/Size/Position</td><td>управление окном</td></tr>
+<tr><td>ToggleFullscreen()</td><td>fullscreen/windowed</td></tr>
+<tr><td>IsWindowResized()</td><td>bool</td></tr>
+</table>
+<pre><code>float dt = GetFrameTime();
+double t  = GetTime();</code></pre>
+</section>
+<section>
+<h2>Ввод</h2>
+<table>
+<tr><td>IsKeyDown(sc)</td><td>удержание</td></tr>
+<tr><td>IsKeyPressed(sc)</td><td>нажатие в кадре</td></tr>
+<tr><td>IsKeyReleased(sc)</td><td>отпускание</td></tr>
+<tr><td>IsMouseButtonDown(b)</td><td>1 L, 2 M, 3 R</td></tr>
+<tr><td>GetMousePosition()</td><td>Vector2</td></tr>
+<tr><td>GetMouseWheelMove()</td><td>float</td></tr>
+<tr><td>SetMousePosition(x,y)</td><td>курсор</td></tr>
+</table>
+<pre><code>if (IsKeyDown(SDL_SCANCODE_W))
+    cam.position.z -= 5.0f * dt;
+if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { }
+Vector2 m = GetMousePosition();</code></pre>
+<div class="tip">Клавиши — <b>SDL scancodes</b> (<code>SDL_SCANCODE_A</code>), не буквы. Подключи <code>&lt;SDL3/SDL_scancode.h&gt;</code>.</div>
+</section>
+</div>
+<div class="col">
+<section>
+<h2>2D-рисование</h2>
+<table>
+<tr><td>DrawPixel(x,y,c)</td><td>точка</td></tr>
+<tr><td>DrawLine(x0,y0,x1,y1,c)</td><td>линия</td></tr>
+<tr><td>DrawLineEx(a,b,thick,c)</td><td>толстая</td></tr>
+<tr><td>DrawCircle(cx,cy,r,c)</td><td>круг</td></tr>
+<tr><td>DrawCircleV(center,r,c)</td><td>Vector2</td></tr>
+<tr><td>DrawCircleLines(cx,cy,r,c)</td><td>контур</td></tr>
+<tr><td>DrawRectangle(x,y,w,h,c)</td><td>прямоугольник</td></tr>
+<tr><td>DrawRectangleRec(rec,c)</td><td>Rectangle</td></tr>
+<tr><td>DrawRectanglePro(rec,origin,rot,c)</td><td>поворот</td></tr>
+<tr><td>DrawRectangleLines(x,y,w,h,c)</td><td>рамка</td></tr>
+<tr><td>DrawTriangle(a,b,c,col)</td><td>треугольник</td></tr>
+<tr><td>DrawPoly(center,sides,r,rot,c)</td><td>полигон</td></tr>
+</table>
+<pre><code>DrawRectangle(20, 20, 200, 60, BLUE);
+DrawRectangleLines(20, 20, 200, 60, WHITE);
+DrawCircleV((Vector2){120,140}, 40, RED);</code></pre>
+</section>
+<section>
+<h2>Текст и шрифты</h2>
+<table>
+<tr><td>DrawText(txt,x,y,size,c)</td><td>встроенный шрифт</td></tr>
+<tr><td>DrawTextEx(font,txt,pos,size,spacing,c)</td><td>свой шрифт</td></tr>
+<tr><td>MeasureTextEx(font,txt,size,spacing)</td><td>Vector2</td></tr>
+<tr><td>MeasureText(txt,size)</td><td>int width</td></tr>
+<tr><td>LoadFont(path)</td><td>Font</td></tr>
+<tr><td>LoadFontEx(path,size,first,count)</td><td>Font</td></tr>
+<tr><td>UnloadFont(font)</td><td>освободить</td></tr>
+</table>
+<pre><code>Font f = LoadFontEx("C:/Windows/Fonts/segoeui.ttf",
+                    32, 32, 96);
+DrawTextEx(f, "Score: 42", (Vector2){20,80}, 24, 1, WHITE);
+UnloadFont(f);</code></pre>
+<div class="warn">VGui рисует текст только при <code>font.ok</code>. Если передать <code>(Font){0}</code>, кнопки будут без подписей.</div>
+</section>
+<section>
+<h2>Текстуры и изображения</h2>
+<table>
+<tr><td>LoadImage(path)</td><td>CPU Image</td></tr>
+<tr><td>LoadImageFromMemory(...)</td><td>из памяти</td></tr>
+<tr><td>LoadTexture(path)</td><td>GPU Texture2D</td></tr>
+<tr><td>LoadTextureKTX2(path)</td><td>BC7/BC5 KTX2</td></tr>
+<tr><td>LoadTextureFromImage(img)</td><td>RGBA/SRGB</td></tr>
+<tr><td>LoadTextureFromImageSRGB(img)</td><td>sRGB</td></tr>
+<tr><td>LoadTextureFromImageEx(img,opts)</td><td>sampler+mips</td></tr>
+<tr><td>UnloadTexture(t)</td><td>освободить</td></tr>
+<tr><td>UpdateTexture(t,pixels)</td><td>обновить</td></tr>
+</table>
+<pre><code>Texture2D tex = LoadTexture("brick.png");
+Texture2D bc = LoadTextureKTX2("brick.ktx2"); // BC7/BC5
+DrawTexture(tex, 20, 20, WHITE);
+UnloadTexture(bc);
+UnloadTexture(tex);
+
+TextureOptions o = { .srgb=1, .mipmaps=1,
+                     .minFilter=5, .wrapS=0, .wrapT=0 };
+Texture2D t2 = LoadTextureFromImageEx(img, &amp;o);</code></pre>
+<div class="tip">Цветовые карты — sRGB; normal / metallic-roughness / AO — UNORM.</div>
+</section>
+</div>
+</div>
+<div class="page">
+<div class="col">
+<section>
+<h2>Камеры · 2D / 3D</h2>
+<pre><code>Camera2D c2 = { .offset={0,0}, .target={0,0},
+                .rotation=0, .zoom=1 };
+BeginMode2D(c2);
+DrawCircleV((Vector2){0,0}, 50, RED);
+EndMode2D();
+
+Camera3D c3 = { .position={2,2,4}, .target={0,0,0},
+                .up={0,1,0}, .fovy=45,
+                .nearPlane=0.05f, .farPlane=100 };
+BeginMode3D(c3);
+DrawCube((Vector3){0,0,0}, (Vector3){1,1,1}, BLUE);
+EndMode3D();</code></pre>
+</section>
+<section>
+<h2>Меши и модели</h2>
+<table>
+<tr><td>GenMeshCube(w,h,d)</td><td>Mesh</td></tr>
+<tr><td>GenMeshSphere(r,rings,slices)</td><td>Mesh</td></tr>
+<tr><td>GenMeshPlane(w,d,rx,rz)</td><td>Mesh</td></tr>
+<tr><td>GenMeshCylinder(r,h,slices)</td><td>Mesh</td></tr>
+<tr><td>GenMeshTorus(r1,r2,rs,ts)</td><td>Mesh</td></tr>
+<tr><td>DrawMesh(mesh,tex,color,model)</td><td>Matrix model</td></tr>
+<tr><td>LoadModelFromMesh(mesh)</td><td>Model</td></tr>
+<tr><td>DrawModel(m,pos,rot,scale,tint)</td><td>rot в радианах</td></tr>
+<tr><td>UnloadModel(m)</td><td>освободить</td></tr>
+</table>
+<pre><code>Mesh cube = GenMeshCube(1,1,1);
+Model m = LoadModelFromMesh(cube);
+DrawModel(m, (Vector3){0,1,0}, (Vector3){0,0,0},
+          (Vector3){1,1,1}, WHITE);
+UnloadModel(m);</code></pre>
+</section>
+<section>
+<h2>Материалы PBR</h2>
+<pre><code>Material mat = LoadMaterialDefault();
+SetMaterialColor(&amp;mat, WHITE);
+SetMaterialBaseColorFactor(&amp;mat, 1,1,1,1);
+SetMaterialPBR(&amp;mat, 0.0f, 0.35f);      // metallic, roughness
+SetMaterialTexture(&amp;mat, MATERIAL_MAP_ALBEDO, albedo);
+SetMaterialTexture(&amp;mat, MATERIAL_MAP_NORMAL, normal);
+SetMaterialTexture(&amp;mat, MATERIAL_MAP_METALLICROUGHNESS, mr);
+SetMaterialTexture(&amp;mat, MATERIAL_MAP_AO, ao);
+SetMaterialEmission(&amp;mat, WHITE, 1.0f);
+SetMaterialIOR(&amp;mat, 1.5f);</code></pre>
+<table>
+<tr><td>MATERIAL_MAP_ALBEDO</td><td>0 sRGB</td></tr>
+<tr><td>MATERIAL_MAP_NORMAL</td><td>1 UNORM</td></tr>
+<tr><td>MATERIAL_MAP_METALLICROUGHNESS</td><td>2 G=rough B=metal</td></tr>
+<tr><td>MATERIAL_MAP_AO</td><td>3 R=occlusion</td></tr>
+<tr><td>MATERIAL_MAP_EMISSION</td><td>4 sRGB</td></tr>
+<tr><td>MATERIAL_MAP_SPECULAR</td><td>5 A=weight</td></tr>
+<tr><td>MATERIAL_MAP_CLEARCOAT</td><td>6 R/G</td></tr>
+</table>
+</section>
+</div>
+<div class="col">
+<section>
+<h2>Освещение</h2>
+<pre><code>vgraphics_SetDirectionalLight(true,
+    (Vector3){-0.3f,-0.7f,-0.6f}, WHITE, 3.0f);
+vgraphics_SetAmbientLight(true, (Color){90,100,120,255}, 0.15f);
+vgraphics_SetPointLight(true, (Vector3){2,3,2},
+    (Color){255,200,120,255}, 5.0f, 10.0f);
+vgraphics_SetSpotLight(true, pos, dir, WHITE,
+    8.0f, 15.0f, 0.9f, 0.7f);
+vgraphics_SetAreaLight(true, pos, normal,
+    2.0f, 1.0f, WHITE, 4.0f);
+vgraphics_SetFog(true, GRAY, 5.0f, 40.0f, 0.0f);</code></pre>
+<pre><code>VLightData lights[64];
+lights[0] = VLightDataDirectional(dir, WHITE, 3.0f);
+vgraphics_SetLightArray(lights, 1);</code></pre>
+<div class="tip">SSBO-путь: <code>VLCRLIB_MAX_GPU_LIGHTS = 64</code>.</div>
+</section>
+<section>
+<h2>IBL · тени · постобработка</h2>
+<pre><code>vgraphics_LoadIBL(NULL);          // процедурная студия
+vgraphics_LoadIBL("sky.hdr");     // HDR
+vgraphics_SetIBLIntensity(1.2f);
+vgraphics_SetSkybox(1);
+
+vgraphics_SetShadows(true, 2048, 0.0015f, 0.8f);
+vgraphics_SetShadowSoftness(1.5f);
+
+SetSSAO(1, 0.5f, 0.6f);
+SetBloom(0.9f, 0.15f);
+SetGraphicsExposure(1.0f);
+SetPostProcess(1);
+SetFXAA(1);   // or:
+SetTAA(1);    // jitter + history + velocity/reprojection</code></pre>
+<div class="warn">IBL загружай <b>между</b> BeginDrawing/EndDrawing: пересоздаются descriptor-bound images.</div>
+</section>
+<section>
+<h2>Атмосфера</h2>
+<pre><code>AtmosphereParams a = {0};
+vgraphics_GetAtmosphere(&amp;a);
+a.enabled = 1;
+a.timeOfDay = 18.5f;
+a.cloudCoverage = 0.3f;
+a.haze = 0.2f;
+a.starIntensity = 0.4f;
+vgraphics_SetAtmosphere(&amp;a);</code></pre>
+</section>
+<section>
+<h2>Debug views</h2>
+<pre><code>SetGraphicsDebugView(0); // final
+SetGraphicsDebugView(1); // albedo
+SetGraphicsDebugView(2); // normal
+SetGraphicsDebugView(3); // roughness
+SetGraphicsDebugView(4); // metallic
+SetGraphicsDebugView(5); // AO
+SetGraphicsDebugView(6); // emissive
+SetGraphicsDebugView(7); // shadow
+
+int v = GetGraphicsDebugView();
+SetGraphicsDebugLog(1);</code></pre>
+</section>
+</div>
+</div>
+<div class="page">
+<div class="col">
+<section>
+<h2>Анимация / скининг</h2>
+<pre><code>SkinnedModel sk = LoadSkinnedModel("hero.glb");
+int n = GetSkinnedModelAnimationCount(sk);
+for (int i=0;i&lt;n;i++) {
+    Animation a = GetSkinnedModelAnimation(sk,i);
+    const char *name = GetSkinnedModelAnimationName(sk,i);
+    float dur = GetSkinnedModelAnimationDuration(sk,i);
+}
+DrawSkinnedModel(sk, GetSkinnedModelAnimation(sk,0),
+                 t, (Vector3){0}, (Vector3){0},
+                 (Vector3){1,1,1}, WHITE);
+
+// crossfade idle -> walk
+DrawSkinnedModelBlend(sk, idle, ti, walk, tw, 0.5f,
+    (Vector3){0}, (Vector3){0}, (Vector3){1,1,1}, WHITE);
+
+// state machine (vanimator.h)
+Animator *an = CreateAnimator(sk);
+AnimatorAddState(an, "idle", idle, true);
+AnimatorAddState(an, "walk", walk, true);
+AnimatorPlay(an, "idle", 0.2f);
+AnimatorAddTransition(an, "idle", "walk",
+                      "speed", ANIM_COND_GREATER, 0.5f, 0.2f);
+AnimatorSetFloat(an, "speed", 1.0f);
+AnimatorSetOverlay(an, "idle", 0.35f);
+// or additive relative to bind pose:
+AnimatorSetAdditiveOverlay(an, "breath", 0.5f);
+AnimatorAddEvent(an, "walk", 0.5f, "footstep");
+// each frame:
+const char *ev;
+while ((ev = AnimatorNextEvent(an)) != NULL)
+    printf("%s\n", ev);
+AnimatorSetRootMotion(an, true);
+AnimatorUpdate(an, dt);
+pos = Vector3Add(pos, AnimatorGetRootMotion(an));
+AnimatorDraw(an, pos, (Vector3){0},
+             (Vector3){1,1,1}, WHITE);
+
+// pose + IK (bone chain upper->mid->end)
+BonePose pose[256];
+GetAnimationPose(idle, 0.0f, pose, 256);
+ApplyTwoBoneIKToPose(sk, pose, 256, 2, 3, 4, handTarget, pole);
+DrawSkinnedModelPose(sk, pose, 256, pos, (Vector3){0},
+                     (Vector3){1,1,1}, WHITE);
+UnloadSkinnedModel(sk);</code></pre>
+<pre><code>int bones = GetSkinnedModelBoneCount(sk);
+for (int b=0;b&lt;bones;b++)
+    printf("%d %s&#92;n", b,
+           GetSkinnedModelBoneName(sk,b));</code></pre>
+<h3>Создать клип</h3>
+<pre><code>AnimTrackData *tracks = calloc(bones, sizeof(*tracks));
+AnimQuatKey rot[3] = {
+  {0.0f, {0,0,0,1}},
+  {0.5f, {0,0.087f,0,0.996f}},
+  {1.0f, {0,0,0,1}}
+};
+tracks[spine].rot = rot;
+tracks[spine].rotCount = 3;
+int clip = vgraphics_AddSkinnedAnimation(sk, "idle",
+                                          1.0f, tracks, bones);
+free(tracks);</code></pre>
+</section>
+<section>
+<h2>Загрузка моделей</h2>
+<div class="tip">Для FBX/OBJ/USD и <code>LoadModelAuto</code> подключи <code>#include &lt;vloaders.h&gt;</code>.</div>
+<table>
+<tr><td>LoadModelGLTFTiny(path)</td><td>.glb/.gltf (tinygltf)</td></tr>
+<tr><td>LoadSkinnedModel(path)</td><td>glTF со скелетом</td></tr>
+<tr><td>LoadFBX(path)</td><td>Assimp, статический</td></tr>
+<tr><td>LoadFBXSkinned(path)</td><td>Assimp + клипы</td></tr>
+<tr><td>LoadOBJ(path)</td><td>Assimp/OBJ+MTL</td></tr>
+<tr><td>LoadUSD(path)</td><td>OpenUSD, статический</td></tr>
+<tr><td>LoadModelAuto(path)</td><td>по расширению</td></tr>
+<tr><td>LoadCookedModel(path)</td><td>.vmesh v1/v2/v3</td></tr>
+<tr><td>LoadTextureKTX2(path)</td><td>BC7/BC5 + mips</td></tr>
+</table>
+<pre><code>Model m = LoadModelAuto("chair.obj");
+Model c = LoadCookedModel("cooked/chair.vmesh");
+Model u = LoadUSD("scene.usdz"); // нужен OpenUSD
+Model f = LoadFBX("robot.fbx");  // нужен Assimp
+
+Scene sc; SceneInit(&sc);
+SceneLoad(&sc, "level.scene.json");
+SceneRuntime rt;
+SceneLoadModels(&sc, "level.scene.json", &rt);
+SceneDraw(&sc, &rt);
+SceneUnloadModels(&rt);</code></pre>
+<div class="warn">USD сейчас без анимаций и без полного <code>UsdPreviewSurface</code>. FBX нужны DLL Assimp: <code>assimp-vc145-mt</code>, <code>poly2tri</code>, <code>minizip</code>, <code>z</code>, <code>kubazip</code>, <code>pugixml</code>.</div>
+</section>
+</div>
+<div class="col">
+<section>
+<h2>GUI (VGui)</h2>
+<pre><code>vtext_EnsureDefaultFont();
+Font font = GetFontDefault();
+VGuiContext gui = {0};
+gui.theme = VGuiDefaultTheme();
+
+// каждый кадр:
+VGuiBeginFrame(&amp;gui, font, GetFrameTime());
+if (VGuiButton(&amp;gui, (Rectangle){20,20,120,28}, "Open"))
+    open_file();
+VGuiCheckBox(&amp;gui, (Rectangle){20,56,150,22}, &amp;loop, "Loop");
+VGuiSlider(&amp;gui, (Rectangle){20,84,200,18}, &amp;speed, 0, 3);
+VGuiInputText(&amp;gui, (Rectangle){20,110,300,26}, path, 512);
+VGuiEndFrame(&amp;gui);</code></pre>
+<table>
+<tr><td>VGuiLabel/Text</td><td>подписи</td></tr>
+<tr><td>VGuiButton/SmallButton</td><td>кнопки</td></tr>
+<tr><td>VGuiCheckBox/Radio</td><td>флаги</td></tr>
+<tr><td>VGuiSlider/Int</td><td>float/int</td></tr>
+<tr><td>VGuiCombo/ListBox/Tabs</td><td>выбор</td></tr>
+<tr><td>VGuiColorPicker</td><td>Color*</td></tr>
+<tr><td>VGuiBeginWindow</td><td>окно</td></tr>
+</table>
+</section>
+<section>
+<h2>Аудио</h2>
+<pre><code>InitAudioDevice();
+
+Sound s = LoadSound("hit.wav");
+PlaySound(s);
+SetSoundVolume(s, 0.8f);
+
+Music m = LoadMusicStream("music.ogg");
+PlayMusicStream(m);
+SetMusicVolume(m, 0.7f);
+while (IsMusicStreamPlaying(m))
+    UpdateMusicStream(m);
+
+UnloadMusicStream(m);
+CloseAudioDevice();
+
+// positional mixer (miniaudio)
+InitAudio3D();
+LoadReverbIR("room_ir.wav", 0.35f); // before sounds
+Sound3D s3 = LoadSound3D("hit.wav");
+SetListener3D((Vector3){0,1,0},
+              (Vector3){0,0,-1}, (Vector3){0,1,0});
+PlaySound3D(s3, (Vector3){2,1,-4});
+SetSound3DPosition(s3, (Vector3){3,1,-2});
+SetSound3DOcclusion(s3, 0.5f);   // 0..1, includes low-pass
+SetSound3DReverb(s3, 0.4f);      // feedback-delay zone
+SetSound3DVelocity(s3, (Vector3){1,0,0});
+SetListener3DVelocity((Vector3){0,0,0});
+
+Sound3D music = LoadMusic3D("theme.ogg"); // streamed
+SetSound3DLooping(music, true);
+PlaySound3D(music, (Vector3){0,0,0});
+PauseSound3D(music);
+ResumeSound3D(music);
+SeekSound3D(music, 12.0f);
+float t = GetSound3DTime(music);
+float len = GetSound3DDuration(music);
+UnloadSound3D(music);
+UnloadSound3D(s3);
+CloseAudio3D();</code></pre>
+<div class="tip">VLC-аудио — <code>vaudio.h</code>; 3D-микшер — <code>vaudio3d.h</code> (miniaudio).</div>
+</section>
+<section>
+<h2>Математика</h2>
+<pre><code>#define VLCRLIB_PI 3.14159265f
+Vector3 a = {1,2,3}, b = {4,5,6};
+Vector3 c = Vector3Add(a,b);
+Vector3 n = Vector3Normalize(a);
+float d  = Vector3Dot(a,b);
+Vector3 x = Vector3Cross(a,b);
+Vector3 l = Vector3Lerp(a,b,0.5f);
+
+// two-bone IK: root, mid, end -> target, pole
+Vector3 ikMid, ikEnd;
+Vector3SolveTwoBoneIK(root, mid, end,
+                      target, (Vector3){0,0,1},
+                      &amp;ikMid, &amp;ikEnd);
+
+Matrix model = MatrixMultiply(
+    MatrixTranslate(0,1,0),
+    MatrixRotateY(VLCRLIB_PI/4));
+Matrix view = MatrixLookAt(eye, target, (Vector3){0,1,0});
+Matrix proj = MatrixPerspective(
+    45*VLCRLIB_DEG2RAD, 16.0f/9.0f, 0.05f, 1000);
+Quaternion q = QuaternionFromAxisAngle(
+    (Vector3){0,1,0}, VLCRLIB_PI/2);
+Matrix rot = QuaternionToMatrix(q);</code></pre>
+</section>
+</div>
+</div>
+<div class="page">
+<div class="col">
+<section>
+<h2>Цвета</h2>
+<pre><code>Color c = {255, 128, 0, 255};
+// WHITE BLACK RED GREEN BLUE YELLOW
+// ORANGE PINK PURPLE VIOLET
+// LIGHTGRAY GRAY DARKGRAY
+// SKYBLUE DARKBLUE MAROON LIME
+// BEIGE BROWN DARKBROWN GOLD
+// RAYWHITE BLANK MAGENTA</code></pre>
+</section>
+<section>
+<h2>Render texture</h2>
+<pre><code>RenderTexture2D rt = LoadRenderTexture(1280, 720);
+BeginTextureMode(rt);
+ClearBackground(BLACK);
+DrawCircleV((Vector2){640,360}, 120, RED);
+EndTextureMode();
+
+DrawTextureRec(rt.texture,
+    (Rectangle){0,0,1280,-720},
+    (Vector2){0,0}, WHITE);
+UnloadRenderTexture(rt);</code></pre>
+</section>
+<section>
+<h2>Типы и хэндлы</h2>
+<pre><code>typedef struct Model {
+    unsigned id;
+    int meshCount, materialCount;
+} Model;
+
+typedef struct Mesh {
+    unsigned id;
+    int vertexCount, indexCount;
+} Mesh;
+
+typedef struct Texture2D {
+    unsigned id;
+    int width, height, mipmaps, format;
+} Texture2D;
+
+typedef struct Material {
+    unsigned id;
+    Color baseColor;
+    float baseColorFactor[4];
+    float metallic, roughness, ior;
+    float normalScale, aoStrength;
+    Color emissionColor;
+    float emissionStrength;
+    int alphaMode;      // 0 OPAQUE 1 MASK 2 BLEND
+    float alphaCutoff;
+    int doubleSided;
+    Texture2D albedoMap, normalMap;
+    Texture2D metallicRoughnessMap;
+    Texture2D aoMap, emissionMap;
+} Material;</code></pre>
+</section>
+<section>
+<h2>FrameStats</h2>
+<pre><code>FrameStats fs;
+vgraphics_GetFrameStats(&amp;fs);
+
+printf("%d draws, %llu tris, %.2f ms\n",
+       fs.drawCalls,
+       (unsigned long long)fs.triangles,
+       fs.cpuFrameMs);
+
+// fs.shadowDraws, fs.transparentDraws, fs.culledDraws
+// fs.gpuFrameMs, fs.shadowMs, fs.sceneMs, fs.postMs
+// fs.textureCount, fs.meshCount
+
+// validation: set VLCRLIB_VALIDATION=1
+int verr = vgraphics_GetValidationErrorCount();
+
+// outside BeginDrawing/EndDrawing:
+vgraphics_CaptureScreenshot("frame.png");</code></pre>
+</section>
+</div>
+<div class="col">
+<section>
+<h2>Физика 2D / 3D</h2>
+<h3>2D (Box2D)</h3>
+<pre><code>PhysicsWorld2D *w = CreatePhysicsWorld2D((Vector2){0,9.81f});
+PhysicsBody2D *b = CreatePhysicsBody2DBox(w,
+    (Vector2){0,0}, (Vector2){0.5f,0.5f},
+    PHYS_BODY_DYNAMIC2D, 1.0f, 0.5f, 0.2f);
+
+StepPhysicsWorld2D(w, dt);
+Vector2 p = GetPhysicsBody2DPosition(b);
+DestroyPhysicsBody2D(b);
+DestroyPhysicsWorld2D(w);</code></pre>
+<h3>3D (Bullet)</h3>
+<pre><code>PhysicsWorld3D *w = CreatePhysicsWorld3D(
+    VLCRLIB_DEFAULT_GRAVITY);
+PhysicsBody3D *b = CreatePhysicsBody3D(w,
+    PHYS_SHAPE_BOX3D, (Vector3){0,5,0},
+    (Vector3){1,1,1}, PHYS_BODY_DYNAMIC3D,
+    1.0f, 0.5f, 0.2f);
+
+StepPhysicsWorld3D(w, dt);
+Vector3 p = GetPhysicsBody3DPosition(b);</code></pre>
+<div class="tip">Jolt-бэкенд: <code>Jolt_Init()</code>, <code>Jolt_CreateWorld()</code>, <code>Jolt_Step()</code>, <code>Jolt_CreateBody()</code>.</div>
+</section>
+<section>
+<h2>Сборка</h2>
+<pre><code>cmake -S . -B build -G "Visual Studio 18 2026" -A x64 `
+  -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+
+cmake --build build --config Release</code></pre>
+<p>Зависимости: Vulkan SDK, SDL3, tinygltf; опционально Assimp, OpenUSD, Jolt, VLC.</p>
+<pre><code>build/example/Release/model_animation_viewer.exe</code></pre>
+</section>
+<section>
+<h2>Частые ошибки</h2>
+<ul>
+<li><b>Чёрный экран 3D:</b> не вызван <code>BeginMode3D</code>; камера внутри объекта; near/far.</li>
+<li><b>Модель гигантская:</b> FBX в сантиметрах — масштаб <code>0.01</code>.</li>
+<li><b>Текстура полосами:</b> RGB залит как RGBA / неверный <code>bufferRowLength</code>.</li>
+<li><b>GUI без текста:</b> <code>VGuiBeginFrame(...,(Font){0},...)</code>.</li>
+<li><b>Нет анимации:</b> в FBX нет костей (<code>bones=0</code>) или клип не добавлен.</li>
+<li><b>IBL ломает кадр:</b> загрузка внутри BeginDrawing.</li>
+<li><b>USD не грузится:</b> не собран OpenUSD, <code>LoadUSD</code> — stub.</li>
+</ul>
+</section>
+</div>
+</div></main>
+<footer>vlcrlib cheat sheet · Vulkan 1.4 / SDL3 · Y-up, RH, metres · depth 0..1 · glTF CCW</footer>
+</body>
+</html>

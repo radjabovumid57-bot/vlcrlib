@@ -1,0 +1,13 @@
+# Robust shader directory copy (called from example/CMakeLists.txt)
+# Usage: cmake -DSRC=... -DDST=... -P copy_shaders.cmake
+if(NOT DEFINED SRC OR "${SRC}" STREQUAL "")
+  message(WARNING "copy_shaders: SRC is empty — skipping")
+  return()
+endif()
+if(NOT EXISTS "${SRC}")
+  message(WARNING "copy_shaders: SRC does not exist: ${SRC}")
+  return()
+endif()
+file(MAKE_DIRECTORY "${DST}")
+file(COPY "${SRC}/" DESTINATION "${DST}")
+message(STATUS "copy_shaders: ${SRC} -> ${DST}")

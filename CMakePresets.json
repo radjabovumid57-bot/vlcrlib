@@ -1,0 +1,41 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 20, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "VS 2026 x64 (vcpkg)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+        "VLCRLIB_BUILD_EXAMPLES": "ON",
+        "VLCRLIB_ENABLE_VLC": "OFF"
+      }
+    },
+    {
+      "name": "cpu",
+      "displayName": "VS 2026 x64 CPU-only (no Vulkan)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build-cpu",
+      "cacheVariables": {
+        "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+        "VLCRLIB_GRAPHICS_CPU": "ON",
+        "VLCRLIB_BUILD_TOOLS": "OFF",
+        "VLCRLIB_BUILD_EXAMPLES": "ON",
+        "VLCRLIB_ENABLE_VLC": "OFF",
+        "CMAKE_PREFIX_PATH": "${sourceDir}/vcpkg_installed/x64-windows",
+        "SDL3_DIR": "${sourceDir}/vcpkg_installed/x64-windows/share/sdl3"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "release", "configurePreset": "default", "configuration": "Release" },
+    { "name": "debug",   "configurePreset": "default", "configuration": "Debug" },
+    { "name": "cpu-release", "configurePreset": "cpu", "configuration": "Release" }
+  ]
+}

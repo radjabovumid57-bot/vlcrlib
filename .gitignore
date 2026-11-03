@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+#  Build output
+# ---------------------------------------------------------------------------
+build/
+build-*/
+cmake-build-*/
+out/
+install/
+
+# language bindings
+bindings/dist/
+bindings/java/build/
+bindings/java/.gradle/
+bindings/csharp/**/bin/
+bindings/csharp/**/obj/
+**/bin/Debug/
+**/bin/Release/
+**/obj/
+
+# android / ios build trees
+android/app/.cxx/
+android/app/build/
+android/build/
+android/.gradle/
+platform/ios/build/
+
+# compiled artifacts
+*.obj
+*.o
+*.pdb
+*.ilk
+*.exp
+*.log
+*.spv
+*.apk
+*.aab
+
+# ---------------------------------------------------------------------------
+#  Dependencies and caches
+# ---------------------------------------------------------------------------
+vcpkg_installed/
+external/SDL3/build/
+
+.gradle-home/
+.dotnet-home/
+.gradle/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+
+# editor / OS noise
+.vs/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# embedded third-party git checkout (not a submodule)
+external/SDL3/external/tinygltf/
+
+# leftover duplicate of tests/ from a Visual Studio "publish" attempt
+/vlcrlib/
+
+
+# backup of the nested repo created by a Visual Studio publish attempt
+.trash-vs-git/
+

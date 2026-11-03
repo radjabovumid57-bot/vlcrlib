@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RootNamespace>Vlcrlib</RootNamespace>
+    <AssemblyName>Vlcrlib</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- The native vlcr_ffi library is produced by CMake (see scripts/build_bindings.ps1)
+       and is not embedded in this assembly; the resolver looks for it at runtime. -->
+
+</Project>

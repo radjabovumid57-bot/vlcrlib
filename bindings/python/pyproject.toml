@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlcrlib"
+version = "0.1.0"
+description = "Python bindings for vlcrlib — a C game/graphics library (SDL3 + Vulkan/WebGPU)"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "vlcrlib contributors" }]
+keywords = ["gamedev", "graphics", "vulkan", "sdl3", "bindings"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Graphics :: 3D Rendering",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+]
+
+[project.urls]
+Homepage = "https://github.com/vlcrlib/vlcrlib"
+
+[tool.setuptools]
+packages = ["vlcrlib"]
+
+# The native library is not built by pip: build it with CMake
+# (scripts/build_bindings.ps1) and either drop vlcr_ffi.dll next to this
+# package or point VLCRLIB_LIBRARY at it.
+[tool.setuptools.package-data]
+vlcrlib = ["*.dll", "*.so", "*.dylib"]

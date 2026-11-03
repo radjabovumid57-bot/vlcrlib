@@ -1,0 +1,257 @@
+INFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+DEBUG   | Current emulator version 37.2.12 is the same as the required version 37.2.12.
+INFO         | Found AVD name 'Medium_Phone_API_37.0'
+INFO         | Found AVD target architecture: x86_64
+INFO         | argv[0]: 'C:\Android\Sdk\emulator\emulator.exe'; program directory: 'C:\Android\Sdk\emulator'
+INFO         | Found systemPath C:\Android\Sdk\system-images\android-37.0\google_apis_playstore\x86_64\
+DEBUG   | autoconfig: -skin 1080x2400
+DEBUG   | autoconfig: -skindir (null)
+DEBUG   | init, loading C:\Android\Sdk\emulator\lib\advancedFeatures.ini
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: GLPipeChecksum = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceANGLE = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceSwiftshader = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: HYPERV = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: HVF = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: KVM = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: FastSnapshotV1 = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ScreenRecording = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VirtualScene = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VideoPlayback = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: GenericSnapshotsUI = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: WindowsOnDemandSnapshotLoad = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: WindowsHypervisorPlatform = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: LocationUiV2 = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: SnapshotAdb = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: QuickbootFileBacked = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: OnDemandSnapshotLoad = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: Vulkan = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: IpDisconnectOnLoad = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: HasSharedSlotsHostMemoryAllocator = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: CarVHalTable = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanSnapshots = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: DynamicMediaProfile = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: CarVhalReplay = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: NoDelayCloseColorBuffer = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: NoDeviceFrame = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VirtioGpuNativeSync = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanShaderFloat16Int8 = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: CarRotary = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: TvRemote = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: GuestUsesAngle = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VirtioGpuFenceContexts = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: AsyncComposeSupport = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanAstcLdrEmulation = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanYcbcrEmulation = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: NetsimWebUi = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: NetsimCliUi = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: WiFiPacketStream = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanAllocateDeviceMemoryOnly = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanAllocateHostMemory = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: QtRawKeyboardInput = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: BypassVulkanDeviceFeatureOverrides = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanDebugUtils = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanCommandBufferCheckpoints = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanVirtualQueue = on
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanRobustness = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceLavapipe = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceLavapipeForSoftwareRendering = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceGpuHost = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: ForceGpuSoftware = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: NetsimX = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanProtectedMemoryEmulation = off
+DEBUG   | FeatureControl::initHostFeatureAndParseDefault: VulkanUseDedicatedAhbMemoryType = on
+INFO         | Guest usage of host flag 'VulkanVirtualQueue' will be ignored.
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GrallocSync = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GrallocSync (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: EncryptUserData = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: EncryptUserData (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: IntelPerformanceMonitoringUnit = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: IntelPerformanceMonitoringUnit (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLAsyncSwap = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLAsyncSwap (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLDMA = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLDMA (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLDMA2 = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLDirectMem = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLDirectMem (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLESDynamicVersion = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GLESDynamicVersion (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Wifi = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: PlayStoreImage = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: PlayStoreImage (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: LogcatPipe = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: LogcatPipe (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: SystemAsRoot = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: KernelDeviceTreeBlobSupport = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DynamicPartition = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DynamicPartition (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: RefCountPipe = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: RefCountPipe (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HostComposition = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HostComposition (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: WifiConfigurable = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioInput = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioInput (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: MultiDisplay = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: MultiDisplay (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanNullOptionalStrings = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanNullOptionalStrings (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: YUV420888toNV21 = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: YUVCache = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: YUVCache (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: KeycodeForwarding = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanIgnoredHandles = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanIgnoredHandles (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioGpuNext = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Mac80211hwsimUserspaceManaged = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Mac80211hwsimUserspaceManaged (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HardwareDecoder = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HardwareDecoder (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioWifi = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioWifi (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: ModemSimulator = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: ModemSimulator (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioMouse = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtconsoleLogcat = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtconsoleLogcat (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioVsockPipe = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioVsockPipe (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanQueueSubmitWithCommands = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanQueueSubmitWithCommands (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanBatchedDescriptorSetUpdate = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VulkanBatchedDescriptorSetUpdate (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Minigbm = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GnssGrpcV1 = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AndroidbootProps = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AndroidbootProps2 = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AndroidbootProps2 (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceSkinOverlay = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceSkinOverlay (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: BluetoothEmulation (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceStateOnBoot = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceStateOnBoot (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HWCMultiConfigs = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: HWCMultiConfigs (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioSndCard = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioSndCard (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioTablet = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VsockSnapshotLoadFixed_b231345789 = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DownloadableSnapshot = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: SupportPixelFold = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: SupportPixelFold (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceKeyboardHasAssistKey = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DeviceKeyboardHasAssistKey (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Uwb = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Uwb (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: GuestAngle = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AndroidVirtualizationFramework = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AndroidVirtualizationFramework (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: XrModeUI = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: VirtioDualModeMouse = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: DualModeMouseDisplayHostCursor = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: AllAppsForHomeTray = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: MicrophoneToggleUI = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: QemuCameraSensorOrientation = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: QemuCameraSensorOrientation (guest) = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: XrDimming = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: XrHandAndEyePointers = on
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: Nfc = off
+DEBUG   | FeatureControl::initGuestFeatureAndParseDefault: XrStatusLed = on
+DEBUG   | Crash dump message: 'gpu found. vendor id 10de device id 0x2d83'
+DEBUG   | autoconfig: -kernel C:\Android\Sdk\system-images\android-37.0\google_apis_playstore\x86_64\\kernel-ranchu
+DEBUG   | Target arch = 'x86_64'
+DEBUG   | Auto-detect: Kernel image requires new device naming scheme.
+DEBUG   | Auto-detect: Kernel does not support YAFFS2 partitions.
+DEBUG   | autoconfig: -ramdisk C:\Android\Sdk\system-images\android-37.0\google_apis_playstore\x86_64\\ramdisk.img
+DEBUG   | Using initial system image: C:\Android\Sdk\system-images\android-37.0\google_apis_playstore\x86_64\\system.img
+DEBUG   | Using initial vendor image: C:\Android\Sdk\system-images\android-37.0\google_apis_playstore\x86_64\\vendor.img
+DEBUG   | autoconfig: -data C:\Users\Admin\.android\avd\..\avd\Medium_Phone.avd\userdata-qemu.img
+DEBUG   | autoconfig: -initdata (null)
+DEBUG   | autoconfig: -cache C:\Users\Admin\.android\avd\..\avd\Medium_Phone.avd\cache.img
+DEBUG   | autoconfig: -sdcard C:\Users\Admin\.android\avd\..\avd\Medium_Phone.avd\sdcard.img
+INFO         | Increasing RAM size to 4096MB
+DEBUG   | VM heap size 336MB is below hardware specified minimum of 576MB,setting it to that value
+DEBUG   | System image is read only
+INFO         | IPv4 server found: 192.168.1.1
+INFO         | Ignore IPv6 address: d8f1:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: d8f1:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: d8f1:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: f8:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: f8:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: f8:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: 28fe:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: 28fe:c081:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: 3808:c181:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: 3808:c181:a02:0:30ec:c081:a02:0
+INFO         | Ignore IPv6 address: 3808:c181:a02:0:30ec:c081:a02:0
+DEBUG   | Found 1 DNS servers:
+DEBUG   | 	192.168.1.1
+INFO         | Guest GLES Driver: Auto (ext controls)
+DEBUG   | FeatureControl::setIfNotOverriden: ForceSwiftshader is changed to enabled
+DEBUG   | emuglConfig_init: gpu_mode_requested: swiftshader, no_window: 1
+
+DEBUG   | Crash dump message: 'emuglConfig_init: gpu_mode_requested: swiftshader, no_window: 1'
+INFO         | emuglConfig_init: vulkan_mode_selected:swiftshader gles_mode_selected:swiftshader
+DEBUG   | setCurrentRenderer: swiftshader swiftshader gles:Swiftshader Indirect vulkan:Swiftshader Indirect
+DEBUG   | emuglConfig_init: GPU emulation enabled using Vulkan:'swiftshader' GLES:'swiftshader' modes
+
+DEBUG   | Crash dump message: 'emuglConfig_init: GPU emulation enabled using Vulkan:'swiftshader' GLES:'swiftshader' modes'
+DEBUG   | Crash dump message: 'Deciding if GLDirectMem/Vulkan should be enabled. Selected GLES renderer: Swiftshader Indirect Selected Vulkan renderer: Swiftshader Indirect API level: 37 '
+DEBUG   | Crash dump message: 'Enabling Vulkan'
+DEBUG   | FeatureControl::setIfNotOverriden: Vulkan is changed to enabled
+DEBUG   | FeatureControl::setIfNotOverriden: GLDirectMem is changed to enabled
+DEBUG   | Crash dump message: 'Enabling GLDirectMem'
+DEBUG   | GPU emulation enabled using Vulkan:'swiftshader' GLES:'swiftshader' modes
+DEBUG   | Adding to the library search path: C:\Android\Sdk\emulator\lib64\gles_swiftshader
+
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `Medium_Phone_API_37.0` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `Medium_Phone_API_37.0` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU compatibility checks are not required
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `Medium_Phone_API_37.0` are met
+DEBUG   | Starting hostapd main loop.
+DEBUG   | found magic skin width=1080 height=2400 bpp=32
+
+DEBUG   | CPU Acceleration: DISABLED
+DEBUG   | CPU Acceleration status: Android Emulator hypervisor driver is not installed on this machine
+DEBUG   | handleCpuAcceleration: feature check for hvf
+ERROR        | x86_64 emulation currently requires hardware acceleration!
+CPU acceleration status: Android Emulator hypervisor driver is not installed on this machine
+More info on configuring VM acceleration on Windows:
+https://developer.android.com/studio/run/emulator-acceleration#vm-windows
+General information on acceleration: https://developer.android.com/studio/run/emulator-acceleration.
+
+INFO         | emuDirName: 'C:\Android\Sdk\emulator'
+INFO         | try dir C:\Android\Sdk\emulator
+INFO         | Trying emulator path 'C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe'
+INFO         | Found target-specific 64-bit emulator binary: C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe
+INFO         | Adding library search path: 'C:\Android\Sdk\emulator\lib64'
+INFO         | Adding library search path: 'C:\Android\Sdk\emulator\lib64\gles_swiftshader'
+INFO         | Adding library search path: 'C:\Android\Sdk\emulator\lib64\vulkan'
+INFO         | Quoted param: [C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe]
+INFO         | Quoted param: [-avd]
+INFO         | Quoted param: [Medium_Phone_API_37.0]
+INFO         | Quoted param: [-no-window]
+INFO         | Quoted param: [-no-audio]
+INFO         | Quoted param: [-no-boot-anim]
+INFO         | Quoted param: [-gpu]
+INFO         | Quoted param: [swiftshader_indirect]
+INFO         | Quoted param: [-no-snapshot]
+INFO         | Quoted param: [-verbose]
+DEBUG   | emulator: Running :C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe
+DEBUG   | qemu backend: argv[00] = "C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe"
+DEBUG   | qemu backend: argv[01] = "-avd"
+DEBUG   | qemu backend: argv[02] = "Medium_Phone_API_37.0"
+DEBUG   | qemu backend: argv[03] = "-no-window"
+DEBUG   | qemu backend: argv[04] = "-no-audio"
+DEBUG   | qemu backend: argv[05] = "-no-boot-anim"
+DEBUG   | qemu backend: argv[06] = "-gpu"
+DEBUG   | qemu backend: argv[07] = "swiftshader_indirect"
+DEBUG   | qemu backend: argv[08] = "-no-snapshot"
+DEBUG   | qemu backend: argv[09] = "-verbose"
+DEBUG   | Concatenated backend parameters:  C:\Android\Sdk\emulator\qemu\windows-x86_64\qemu-system-x86_64-headless.exe -avd Medium_Phone_API_37.0 -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot -verbose

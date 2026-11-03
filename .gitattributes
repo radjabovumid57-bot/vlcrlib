@@ -1,0 +1,35 @@
+# Normalise line endings in text files, keep binaries untouched.
+* text=auto eol=lf
+
+*.c      text
+*.h      text
+*.cpp    text
+*.hpp    text
+*.cs     text
+*.java   text
+*.py     text
+*.md     text
+*.txt    text
+*.json   text
+*.yml    text
+*.yaml   text
+*.cmake  text
+CMakeLists.txt text
+*.bat    text eol=crlf
+*.ps1    text eol=crlf
+
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.pdf    binary
+*.glb    binary
+*.gltf   binary
+*.fbx    binary
+*.ttf    binary
+*.otf    binary
+*.dll    binary
+*.lib    binary
+*.exe    binary
+*.spv    binary
+*.zip    binary

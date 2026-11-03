@@ -1,0 +1,61 @@
+// Java binding for vlcrlib.
+//
+// The native part (vlcr_jni + vlcr_ffi) is built by CMake:
+//
+//   cmake -B build-bindings -DVLCRLIB_BUILD_BINDINGS=ON ...
+//   cmake --build build-bindings --config Release --target vlcr_jni
+//
+// Then `gradle build` produces build/libs/vlcrlib.jar, and the JVM needs the
+// native libraries on java.library.path (or VLCRLIB_LIBRARY pointing at them).
+
+plugins {
+    id 'java'
+}
+
+group = 'org.vlcrlib'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveBaseName = 'vlcrlib'
+    manifest {
+        attributes('Implementation-Title': 'vlcrlib', 'Implementation-Version': project.version)
+    }
+}
+
+// Examples are plain classes without test-framework dependencies; compile them
+// together with the library so `java -cp build/classes/java/main HelloVlcrlib`
+// works after `gradle build`.
+sourceSets {
+    examples {
+        java {
+            srcDirs = ['examples']
+        }
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+compileExamplesJava.dependsOn compileJava
+
+task copyExamples(type: Copy) {
+    from sourceSets.examples.output
+    into layout.buildDirectory.dir('examples')
+}
+
+build.dependsOn copyExamples
+
+task runExample(type: JavaExec, dependsOn: [classes, examplesClasses]) {
+    mainClass = 'HelloVlcrlib'
+    classpath = sourceSets.examples.runtimeClasspath
+    workingDir = rootProject.projectDir
+    systemProperty 'java.library.path', System.getProperty('java.library.path')
+}

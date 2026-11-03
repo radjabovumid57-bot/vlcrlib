@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vlcrlib web</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #1a1c22; color: #eee;
+      font-family: system-ui, sans-serif; height: 100%; overflow: hidden; }
+    #canvas { display: block; width: 100vw; height: 100vh; outline: none; }
+    #status { position: fixed; left: 12px; top: 12px; opacity: 0.7; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div id="status">Loading vlcrlib…</div>
+  <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+  <script>
+    var Module = {
+      canvas: (function() { return document.getElementById('canvas'); })(),
+      setStatus: function(t) {
+        var el = document.getElementById('status');
+        if (el) el.textContent = t || '';
+      },
+      monitorRunDependencies: function(left) {
+        Module.setStatus(left ? ('Loading… (' + left + ')') : '');
+      },
+      onRuntimeInitialized: function() { Module.setStatus(''); }
+    };
+  </script>
+  {{{ SCRIPT }}}
+</body>
+</html>

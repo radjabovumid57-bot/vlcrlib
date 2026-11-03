@@ -1,0 +1,17 @@
+{
+    // CMake Tools — use the preset defined in CMakePresets.json
+    "cmake.useCMakePresets": "always",
+    "cmake.configureOnOpen": false,
+    "cmake.defaultConfigurePreset": "default",
+    "cmake.defaultBuildPreset": "debug",
+
+    // Silence the "no kit selected" warning — presets supply the toolchain
+    "cmake.showNotAllDocumentsOpen": false,
+
+    // C/C++ IntelliSense — point at the same MSVC toolchain the build uses
+    "C_Cpp.default.compilerPath": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe",
+    "C_Cpp.default.intelliSenseMode": "windows-msvc-x64",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.windowsSdkVersion": "10.0.26100.0"
+}

@@ -1,0 +1,31 @@
+name: portability
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  headers:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure MSVC
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: C++17 public headers (Unix)
+        if: runner.os != 'Windows'
+        run: c++ -std=c++17 -I src -c tests/test_cpp_header.cpp -o /tmp/vlcrlib_cpp_header.o
+
+      - name: C++17 public headers (Windows)
+        if: runner.os == 'Windows'
+        run: cl /nologo /std:c++17 /EHsc /I src /c tests/test_cpp_header.cpp /Fo:vlcrlib_cpp_header.obj
+
+      - name: C11 math header (Unix)
+        if: runner.os != 'Windows'
+        run: cc -std=c11 -I src tests/test_math.c -lm -o /tmp/vlcrlib_test_math && /tmp/vlcrlib_test_math
